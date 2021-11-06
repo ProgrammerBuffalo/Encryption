@@ -22,6 +22,8 @@ namespace Server
             serverSocket.Bind(serverEndPoint);
             serverSocket.Listen(10);
 
+            Console.WriteLine("SERVER STARTED");
+
             while (true)
             {
                 Socket clientSocket = serverSocket.Accept();
@@ -44,10 +46,9 @@ namespace Server
                             try
                             {
                                 int length = socket.Receive(buffer);
-                                string message = Encoding.UTF8.GetString(buffer, 0, length);
                                 foreach (var client in sockets)
                                 {
-                                    client.Send(Encoding.Unicode.GetBytes(message));
+                                    client.Send(buffer, 0, length, SocketFlags.None);
                                 }
                             }
                             catch

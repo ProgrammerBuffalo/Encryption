@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace SyncClient
     {
         private static string key = "BxG2xTHkhrYnLkmWy5Tf8wXQj4KZd1O9";
 
-        public static async Task<Cypher> EcryptAES(string data)
+        public static byte[] EcryptAES(string data)
         {
             byte[] encryptedData = null;
 
@@ -30,19 +31,37 @@ namespace SyncClient
                     {
                         using (StreamWriter streamWriter = new StreamWriter(cryptoStream))
                         {
-                            await streamWriter.WriteAsync(data);
+                            streamWriter.Write(data);
                         }
                         encryptedData = memoryStream.ToArray();
                     }
                 }
 
-                return new Cypher { Data = Convert.ToBase64String(encryptedData), IV = aes.IV };
+                Cypher cypher = new Cypher { Data = encryptedData, IV = aes.IV };
+
+                BinaryFormatter binaryFormatter = new BinaryFormatter();
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    binaryFormatter.Serialize(stream, cypher);
+                    stream.Seek(0, SeekOrigin.Begin);
+                    byte[] bytes = stream.ToArray();
+                    stream.Flush();
+                    return bytes;
+                }
             }
         }
 
-        public static async Task<string> DecryptAES(Cypher cypher)
+        public static string DecryptAES(byte[] data)
         {
-            byte[] encryptedData = Convert.FromBase64String(cypher.Data);
+            Cypher cypher = null;
+            BinaryFormatter binaryFormatter = new BinaryFormatter();
+            using (MemoryStream stream = new MemoryStream(data))
+            {
+                stream.Seek(0, SeekOrigin.Begin);
+                cypher = binaryFormatter.Deserialize(stream) as Cypher;
+            }
+
+            byte[] encryptedData = cypher.Data;
             string decryptedData = null;
 
             using (Aes aes = Aes.Create())
@@ -56,9 +75,9 @@ namespace SyncClient
                 {
                     using (CryptoStream cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))
                     {
-                        using (StreamReader readerStream = new StreamReader(cryptoStream, Encoding.UTF8))
+                        using (StreamReader readerStream = new StreamReader(cryptoStream))
                         {
-                            decryptedData = await readerStream.ReadToEndAsync();
+                            decryptedData = readerStream.ReadToEnd();
                         }
                     }
                 }
