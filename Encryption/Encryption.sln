@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyncClient", "SyncClient\SyncClient.csproj", "{04C927DE-D3B9-412B-B542-9D29501116FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncClient", "AsyncClient\AsyncClient.csproj", "{FCE155A8-7818-4A94-B7E4-923482A65F74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hacker", "Hacker\Hacker.csproj", "{785D951A-64CD-4F56-9061-CE52A320C80C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{04C927DE-D3B9-412B-B542-9D29501116FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04C927DE-D3B9-412B-B542-9D29501116FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04C927DE-D3B9-412B-B542-9D29501116FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCE155A8-7818-4A94-B7E4-923482A65F74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCE155A8-7818-4A94-B7E4-923482A65F74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCE155A8-7818-4A94-B7E4-923482A65F74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCE155A8-7818-4A94-B7E4-923482A65F74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{785D951A-64CD-4F56-9061-CE52A320C80C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{785D951A-64CD-4F56-9061-CE52A320C80C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{785D951A-64CD-4F56-9061-CE52A320C80C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{785D951A-64CD-4F56-9061-CE52A320C80C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
