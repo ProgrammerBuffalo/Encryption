@@ -35,7 +35,9 @@ namespace Server
                         var socket = obj as Socket;
 
                         if (socket.Connected)
+                        {
                             Console.WriteLine($"Client {socket.GetHashCode()} is connected");
+                        }
                         else
                             return;
 
@@ -48,7 +50,8 @@ namespace Server
                                 int length = socket.Receive(buffer);
                                 foreach (var client in sockets)
                                 {
-                                    client.Send(buffer, 0, length, SocketFlags.None);
+                                    if (!client.Equals(socket))
+                                        client.Send(buffer, 0, length, SocketFlags.None);
                                 }
                             }
                             catch

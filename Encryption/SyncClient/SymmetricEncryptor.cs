@@ -13,9 +13,7 @@ namespace SyncClient
 {
     class SymmetricEncryptor
     {
-        private static string key = "BxG2xTHkhrYnLkmWy5Tf8wXQj4KZd1O9";
-
-        public static byte[] EcryptAES(string data)
+        public static Cypher EcryptAES(string data, string key)
         {
             byte[] encryptedData = null;
 
@@ -37,30 +35,12 @@ namespace SyncClient
                     }
                 }
 
-                Cypher cypher = new Cypher { Data = encryptedData, IV = aes.IV };
-
-                BinaryFormatter binaryFormatter = new BinaryFormatter();
-                using (MemoryStream stream = new MemoryStream())
-                {
-                    binaryFormatter.Serialize(stream, cypher);
-                    stream.Seek(0, SeekOrigin.Begin);
-                    byte[] bytes = stream.ToArray();
-                    stream.Flush();
-                    return bytes;
-                }
+                return new Cypher { Data = encryptedData, IV = aes.IV };
             }
         }
 
-        public static string DecryptAES(byte[] data)
+        public static string DecryptAES(Cypher cypher, string key)
         {
-            Cypher cypher = null;
-            BinaryFormatter binaryFormatter = new BinaryFormatter();
-            using (MemoryStream stream = new MemoryStream(data))
-            {
-                stream.Seek(0, SeekOrigin.Begin);
-                cypher = binaryFormatter.Deserialize(stream) as Cypher;
-            }
-
             byte[] encryptedData = cypher.Data;
             string decryptedData = null;
 
@@ -84,6 +64,32 @@ namespace SyncClient
 
             }
             return decryptedData;
+        }
+
+
+        public static byte[] SerializeEncryptedData(Cypher cypher)
+        {
+            BinaryFormatter binaryFormatter = new BinaryFormatter();
+            using (MemoryStream stream = new MemoryStream())
+            {
+                binaryFormatter.Serialize(stream, cypher);
+                stream.Seek(0, SeekOrigin.Begin);
+                byte[] bytes = stream.ToArray();
+                stream.Flush();
+                return bytes;
+            }
+        }
+
+        public static Cypher DeserializeEncryptedData(byte[] data)
+        {
+            Cypher cypher = null;
+            BinaryFormatter binaryFormatter = new BinaryFormatter();
+            using (MemoryStream stream = new MemoryStream(data))
+            {
+                stream.Seek(0, SeekOrigin.Begin);
+                cypher = binaryFormatter.Deserialize(stream) as Cypher;
+            }
+            return cypher;
         }
     }
 }
