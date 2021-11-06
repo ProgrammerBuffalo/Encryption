@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncClient", "AsyncClient\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hacker", "Hacker\Hacker.csproj", "{785D951A-64CD-4F56-9061-CE52A320C80C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{1F2E415A-77C7-458E-9765-1E7E5B305213}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{785D951A-64CD-4F56-9061-CE52A320C80C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{785D951A-64CD-4F56-9061-CE52A320C80C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{785D951A-64CD-4F56-9061-CE52A320C80C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F2E415A-77C7-458E-9765-1E7E5B305213}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F2E415A-77C7-458E-9765-1E7E5B305213}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F2E415A-77C7-458E-9765-1E7E5B305213}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F2E415A-77C7-458E-9765-1E7E5B305213}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
