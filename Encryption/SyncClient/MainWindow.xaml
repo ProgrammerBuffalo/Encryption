@@ -5,17 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SyncClient"
         mc:Ignorable="d"
-       Title="Sync Client" Height="450" Width="350" Loaded="Window_Loaded">
+       Title="Sync Client" Height="450" Width="400" Closed="Window_Closed">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"></RowDefinition>
-            <RowDefinition Height="5*"></RowDefinition>
+            <RowDefinition Height="1.5*"></RowDefinition>
+            <RowDefinition Height="4*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <TextBox x:Name="txtInput" Margin="20 20 20 0" KeyDown="txtInput_KeyDown"></TextBox>
-        <RichTextBox IsEnabled="False" FontSize="16" x:Name="richTxtBox" Grid.Row="1" Grid.ColumnSpan="2" Margin="20 10 20 20"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Grid.Row="0" Margin="0 5">Your Name</Label>
+            <TextBox x:Name="txtName" Grid.Column="1" Margin="20 5"></TextBox>
+            <Button Click="Button_Click" Margin="0 5 20 5" Grid.Column="2">Connect</Button>
+            <Label Grid.Column="0" Grid.Row="1" Margin="0 5">Your text</Label>
+            <TextBox x:Name="txtInput" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="20 5" KeyDown="txtInput_KeyDown"></TextBox>
+        </Grid>
+
+        <RichTextBox VerticalScrollBarVisibility="Visible" IsReadOnly="True" FontSize="16" x:Name="richTxtBox" Grid.Row="1" Grid.ColumnSpan="2" Margin="20 10 20 20"/>
         <ProgressBar x:Name="progressBar" Value="{Binding Path=Progress, UpdateSourceTrigger=PropertyChanged}" Maximum="100" Minimum="0" Grid.Row="2" Margin="20 10"></ProgressBar>
 
         <Grid Grid.Row="3">

@@ -35,6 +35,8 @@ namespace SyncClient
         private string currentState;
         private double progress;
 
+        private string name;
+
         public string CurrentState
         {
             get
@@ -87,8 +89,46 @@ namespace SyncClient
             DataContext = this;
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void txtInput_KeyDown(object sender, KeyEventArgs e)
         {
+            TextBox textBox = sender as TextBox;
+            if (e.Key == Key.Enter)
+            {
+                
+                if ((clientSocket?.Connected).GetValueOrDefault())
+                {
+                    Task.Run(() =>
+                    {
+                        Dispatcher.Invoke(async () =>
+                        {
+                            textBox.IsEnabled = false;
+                            Cypher cypher = SymmetricEncryptor.EcryptAES(name + ": " + textBox.Text, key);
+                            CurrentState = "Encrypting message..."; Progress += 33.3;
+                            await Task.Delay(500);
+                            byte[] data = SymmetricEncryptor.SerializeEncryptedData(cypher);
+                            CurrentState = "Serializing message..."; Progress += 33.3;
+                            await Task.Delay(500);
+                            CurrentState = "Sending encrypted message..."; Progress += 33.3;
+                            await Task.Delay(150);
+                            clientSocket.Send(data);
+                            richTxtBox.AppendText("You: " + textBox.Text + "\n");
+                            textBox.Clear();
+                            Progress = 0;
+                            CurrentState = "";
+                            textBox.IsEnabled = true;
+                        });
+                    });
+                }
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            name = txtName.Text;
+
+            (sender as Button).IsEnabled = false;
+            txtName.IsEnabled = false;
+
             clientSocket = new Socket(SocketType.Stream, ProtocolType.Tcp);
             try
             {
@@ -103,7 +143,7 @@ namespace SyncClient
 
                         Cypher cypher = SymmetricEncryptor.DeserializeEncryptedData(buffer);
                         string str = SymmetricEncryptor.DecryptAES(cypher, key);
-                        richTxtBox.AppendText(str + "\n");
+                        Dispatcher.Invoke(() => richTxtBox.AppendText(str + "\n"));
                     }
                 });
 
@@ -115,36 +155,9 @@ namespace SyncClient
             }
         }
 
-        private void txtInput_KeyDown(object sender, KeyEventArgs e)
+        private void Window_Closed(object sender, EventArgs e)
         {
-            TextBox textBox = sender as TextBox;
-            if (e.Key == Key.Enter)
-            {
-                
-                if ((clientSocket?.Connected).GetValueOrDefault())
-                {
-                    Task.Run(() =>
-                    {
-                        Dispatcher.Invoke(async () =>
-                        {
-                            textBox.IsEnabled = false;
-                            Cypher cypher = SymmetricEncryptor.EcryptAES(textBox.Text, key);
-                            CurrentState = "Encrypting message..."; Progress += 33.3;
-                            await Task.Delay(500);
-                            byte[] data = SymmetricEncryptor.SerializeEncryptedData(cypher);
-                            CurrentState = "Serializing message..."; Progress += 33.3;
-                            await Task.Delay(500);
-                            CurrentState = "Sending encrypted message..."; Progress += 33.3;
-                            await Task.Delay(150);
-                            clientSocket.Send(data);
-                            textBox.Clear();
-                            Progress = 0;
-                            CurrentState = "";
-                            textBox.IsEnabled = true;
-                        });
-                    });
-                }
-            }
+            clientSocket.Close();
         }
     }
 }
