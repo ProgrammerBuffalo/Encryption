@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SyncClient.Properties
+namespace SymmetricEncryptClient.Properties
 {
 
 

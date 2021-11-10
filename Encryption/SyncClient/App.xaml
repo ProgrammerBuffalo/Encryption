@@ -1,7 +1,7 @@
-﻿<Application x:Class="SyncClient.App"
+﻿<Application x:Class="SymmetricEncryptClient.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:SyncClient"
+             xmlns:local="clr-namespace:SymmetricEncryptClient"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          

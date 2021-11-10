@@ -1,23 +1,45 @@
-﻿<Window x:Class="AsyncClient.MainWindow"
+﻿<Window x:Class="AsymmetricEncryptClient.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AsyncClient"
+        xmlns:local="clr-namespace:AsymmetricEncryptClient"
         mc:Ignorable="d"
-        Title="Async Client" Height="450" Width="350">
+        Title="Sync Client" Height="450" Width="400" Closed="Window_Closed">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition Height="1.5*"></RowDefinition>
+            <RowDefinition Height="4*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"></ColumnDefinition>
-            <ColumnDefinition Width="1*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
 
-        <RichTextBox Grid.ColumnSpan="2" Margin="20"/>
-        <TextBox Grid.Row="1" Margin="20 10"></TextBox>
-        <Button Grid.Row="1" Grid.Column="1" Margin="20 10">SEND</Button>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Grid.Row="0" Margin="0 5">Your Name</Label>
+            <TextBox x:Name="txtName" Grid.Column="1" Margin="20 5"></TextBox>
+            <Button Click="Button_Click" Margin="0 5 20 5" Grid.Column="2">Connect</Button>
+            <Label Grid.Column="0" Grid.Row="1" Margin="0 5">Your text</Label>
+            <TextBox x:Name="txtInput" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="20 5" KeyDown="txtInput_KeyDown"></TextBox>
+        </Grid>
+
+        <RichTextBox VerticalScrollBarVisibility="Visible" IsReadOnly="True" FontSize="16" x:Name="richTxtBox" Grid.Row="1" Grid.ColumnSpan="2" Margin="20 10 20 20"/>
+        <ProgressBar x:Name="progressBar" Value="{Binding Path=Progress, UpdateSourceTrigger=PropertyChanged}" Maximum="100" Minimum="0" Grid.Row="2" Margin="20 10"></ProgressBar>
+
+        <Grid Grid.Row="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label FontSize="12" Grid.Row="0" Margin="20 0" Content="{Binding Path=CurrentState, UpdateSourceTrigger=PropertyChanged}"></Label>
+        </Grid>
     </Grid>
 </Window>

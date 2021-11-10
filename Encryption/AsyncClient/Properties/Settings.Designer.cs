@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AsyncClient.Properties
+namespace AsymmetricEncryptClient.Properties
 {
 
 
