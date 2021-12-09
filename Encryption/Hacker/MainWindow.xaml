@@ -5,8 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Hacker"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="600">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <TextBox FontSize="20" x:Name="txtKey" IsEnabled="False" Grid.Row="0" Margin="25"></TextBox>
+        <Button Grid.Column="1" Margin="25" FontSize="20" Click="Button_Click">GET KEY</Button>
+
+        <RichTextBox VerticalScrollBarVisibility="Visible" IsReadOnly="True" FontSize="20" x:Name="txtEncrData" Grid.ColumnSpan="2" Grid.Row="1" Margin="25"/>
+
+        <RichTextBox VerticalScrollBarVisibility="Visible" IsReadOnly="True" FontSize="20" x:Name="txtDecrData" Grid.Row="2" Grid.ColumnSpan="2" Margin="25" Foreground="Red"/>
     </Grid>
 </Window>

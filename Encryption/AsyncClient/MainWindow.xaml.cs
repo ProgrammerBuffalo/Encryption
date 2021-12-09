@@ -25,6 +25,14 @@ namespace AsymmetricEncryptClient
         private double progress;
         private string name;
 
+        private AsymmetricEncryptor asymmetricEncryptor;
+
+        private string publicKey =
+            "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAKNvy0DK3vAgA1P8HeXs" +
+            "UUS7vQE1uhR/Z2uG5EV6NbVR2yPnw0/xm0jncmRicNIRy1sT90P7UVzEYvHDTXwgw5ECAwEAAQ==";
+
+        //private PrivateKey privateKey;
+
         public string CurrentState
         {
             get
@@ -61,6 +69,8 @@ namespace AsymmetricEncryptClient
         public MainWindow()
         {
             InitializeComponent();
+            asymmetricEncryptor = new AsymmetricEncryptor();
+            asymmetricEncryptor.SetPublicKey(publicKey);
             DataContext = this;
         }
         private void txtInput_KeyDown(object sender, KeyEventArgs e)
@@ -71,7 +81,7 @@ namespace AsymmetricEncryptClient
 
                 if ((clientSocket?.Connected).GetValueOrDefault())
                 {
-                    byte[] data = AsymmetricEncryptor.EncryptRSA(textBox.Text);
+                    byte[] data = asymmetricEncryptor.EncryptRSA(textBox.Text);
                     clientSocket.Send(data);
                 }
             }
@@ -96,7 +106,7 @@ namespace AsymmetricEncryptClient
                         byte[] buffer = new byte[1024000];
                         int length = clientSocket.Receive(buffer);
 
-                        string str = AsymmetricEncryptor.DecryptRSA(buffer);
+                        string str = asymmetricEncryptor.DecryptRSA(buffer);
                         Dispatcher.Invoke(() => richTxtBox.AppendText(str + "\n"));
                     }
                 });
